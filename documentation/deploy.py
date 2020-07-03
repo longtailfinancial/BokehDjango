@@ -71,7 +71,10 @@ class BokehDjangoInstaller:
         If the command is successful (returns 0) then the process continues.
         Otherwise, check_call will raise CalledProcessError.
         """
-        check_call(instruction, stdout=open(os.devnull,'wb'), stderr=STDOUT)
+        if not self.dry_run:
+            check_call(instruction, stdout=open(os.devnull,'wb'), stderr=STDOUT)
+        else:
+            logger.info(f"Skipping {instruction}. Run with --dry-run = False to perform a deploy.")
 
 
     def install_bokeh_django(self: object, group='ltfdev', user='shawn', full_name='Shawn Anderson'):
