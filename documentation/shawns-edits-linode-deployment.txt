@@ -15,6 +15,12 @@
 # Boot
 # Log in as root
 
+# Update sshd configuration
+vim /etc/ssh/sshd_config
+    PermitRootLogin no
+    PasswordAuthentication no
+    UsePAM no
+
 # update the machine
 apt-get update
 apt-get install gcc -y
@@ -23,12 +29,6 @@ apt-get upgrade -y
 apt-get install fail2ban -y
 apt-get install xclip -y
 
-### Can we automate these:
-### Also, what are the security concerns? - Shawn
-vim /etc/ssh/sshd_config
-    PermitRootLogin no
-    PasswordAuthentication no
-    UsePAM no
 apt-get install git-core -y
 apt-get install virtualenv -y
 apt-get install gunicorn -y
@@ -57,7 +57,7 @@ chmod 0440 /etc/sudoers
 /usr/sbin/useradd -c "Shawn Anderson" -m -g ltfdev shawn
 
 # set up a password for the new user. you'll need the password to run sudo commands
-/usr/bin/passwd 
+/usr/bin/passwd shawn
 
 # add the deployer user to the group
 /usr/sbin/usermod -a -G ltfdev shawn
@@ -65,6 +65,7 @@ chmod 0440 /etc/sudoers
 # create a directory for the deployer's public key and authorized_keys file
 mkdir /home/shawn/.ssh
 
+### ***************
 ### create a public/private key pair on your local computer
 # List your keys
 # ls -l ~/.ssh/id_*.pub
